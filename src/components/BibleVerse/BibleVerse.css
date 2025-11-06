@@ -1,0 +1,28 @@
+.verse-container {
+  margin-top: 40px;
+  max-width: 550px;
+}
+
+.verse-text {
+  font-family: 'Times New Roman', Times, serif;
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--secondary-text);
+  border-left: 3px solid var(--accent-color);
+  padding-left: 20px;
+  line-height: 1.7;
+}
+
+.verse-text b {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent-color);
+  display: block;
+  margin-top: 10px;
+}
+
+.verse-loading,
+.verse-error {
+  font-style: italic;
+  color: var(--secondary-text);
+}
