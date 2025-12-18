@@ -5,14 +5,15 @@ import "./Navbar.css";
 const Navbar = () => {
   const [active, setActive] = useState("hero");
 
+  // ADDED "certificates" to the array
   const sections = [
     { id: "hero", label: "Home" },
     { id: "about", label: "About" },
     { id: "skills", label: "Skills" },
     { id: "projects", label: "Projects" },
+    { id: "certificates", label: "Certificates" },
     { id: "contact", label: "Contact" },
   ];
-
   
   useEffect(() => {
     const lastSection = localStorage.getItem("activeSection");

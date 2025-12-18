@@ -1,74 +1,245 @@
+/* ========================================= */
+/* 1. PUBLIC WEBSITE STYLES (The Original UI) */
+/* ========================================= */
 .hero-section {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 2rem; 
+  gap: 4rem;
+  padding: 0 10%;
+  position: relative;
+  /* Ensure it doesn't get squashed in admin */
+  width: 100%; 
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .hero-content {
-  flex: 1; 
-  max-width: 500px;
+  flex: 1;
+  max-width: 600px;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-content h1 {
-  font-size: clamp(40px, 5vw, 60px);
+  font-size: clamp(40px, 6vw, 70px);
   margin: 0;
   line-height: 1.1;
+  color: #ccd6f6;
+  font-weight: 700;
 }
 
 .hero-content p {
   margin-top: 25px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #8892b0;
   max-width: 540px;
-  color: var(--secondary-text);
 }
 
 .hero-button {
-  margin-top: 50px;
   padding: 1rem 2rem;
   font-size: 1rem;
-  color: var(--accent-color);
+  color: #64ffda;
   background-color: transparent;
-  border: 1px solid var(--accent-color);
+  border: 1px solid #64ffda;
   border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
 
 .hero-button:hover {
   background-color: rgba(100, 255, 218, 0.1);
+  transform: translateY(-2px);
 }
-
 
 .hero-grid-container {
-  flex: 1.5; 
-  max-width: 700px; 
-  height: 300px; 
+  flex: 1;
+  height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
+  z-index: 1;
 }
 
+/* Responsive Public */
 @media (max-width: 992px) {
   .hero-section {
-    flex-direction: column; 
-    justify-content: center;
+    flex-direction: column;
     text-align: center;
     padding-top: 120px;
   }
-
   .hero-content {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    order: 2; 
-    flex: none;
+    order: 2;
   }
-
   .hero-grid-container {
     width: 100%;
-    max-width: 500px;
-    height: 200px; 
+    height: 300px;
+    order: 1;
     margin-bottom: 40px;
-    order: 1; 
-    flex: none;
   }
 }
+
+/* ========================================= */
+/* 2. ADMIN DASHBOARD STYLES (The Fix)       */
+/* ========================================= */
+
+/* Container Adjustment when in Admin */
+.hero-section.admin-mode {
+  border: 1px dashed rgba(100, 255, 218, 0.3);
+  background: rgba(2, 12, 27, 0.4); /* Slight dim to show area */
+  border-radius: 12px;
+  padding: 3rem;
+  margin-top: 20px;
+}
+
+/* Floating Save Button */
+.admin-save-floater {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+}
+
+.admin-save-floater button {
+  background: #64ffda;
+  color: #0a192f;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: 0.3s;
+}
+
+.admin-save-floater button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(100, 255, 218, 0.4);
+}
+
+/* Editable Inputs (Make them look like the text) */
+.editable-input {
+  width: 100%;
+  background: rgba(100, 255, 218, 0.05);
+  border: 1px dashed rgba(100, 255, 218, 0.3);
+  color: inherit;
+  font-family: inherit;
+  border-radius: 4px;
+  padding: 10px;
+  outline: none;
+  resize: none;
+  transition: 0.3s;
+}
+
+.editable-input:focus {
+  background: rgba(100, 255, 218, 0.1);
+  border-color: #64ffda;
+}
+
+/* Specific Font Sizes for Admin Inputs */
+.headline-input {
+  font-size: clamp(40px, 6vw, 70px);
+  font-weight: 700;
+  line-height: 1.1;
+  color: #ccd6f6;
+  min-height: 1.5em;
+  overflow: hidden;
+}
+
+.bio-input {
+  margin-top: 20px;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #8892b0;
+  min-height: 150px;
+}
+
+/* --- ADMIN GRID EDITOR (The Right Side) --- */
+.admin-grid-editor {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 15px;
+  width: 100%;
+  background: rgba(2, 12, 27, 0.3);
+  padding: 15px;
+  border-radius: 12px;
+}
+
+.admin-card-edit {
+  background: #112240;
+  border: 1px solid #233554;
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.admin-card-edit:hover {
+  border-color: #64ffda;
+}
+
+/* Image Preview Box */
+.img-preview {
+  width: 100%;
+  height: 120px;
+  background-color: #000;
+  background-size: cover;
+  background-position: center;
+  border-radius: 6px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Upload Button Overlay */
+.img-preview label {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64ffda;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: 0.2s;
+}
+
+.img-preview label:hover {
+  opacity: 1;
+  background: #64ffda;
+  color: #0a192f;
+}
+
+/* Small Inputs inside Cards */
+.admin-card-edit input {
+  background: #0a192f;
+  border: 1px solid #233554;
+  color: #ccd6f6;
+  padding: 6px 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.admin-card-edit input:focus {
+  border-color: #64ffda;
+}
+
+.spin { animation: spin 1s linear infinite; }
+@keyframes spin { 100% { transform: rotate(360deg); } }

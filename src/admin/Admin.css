@@ -1,0 +1,294 @@
+/* ========================================= /
+/ 1. VARIABLES & BASE SETUP                 /
+/ ========================================= */
+:root {
+  --admin-bg: #030712;
+  --glass-bg: rgba(17, 34, 64, 0.85);
+  --glass-border: rgba(100, 255, 218, 0.15);
+  --neon-blue: #64ffda;
+  --neon-red: #ff5555;
+  --text-primary: #f3f4f6;
+  --text-secondary: #9ca3af;
+  --input-bg: rgba(2, 12, 27, 0.6);
+  --transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+/* --- FIX: REMOVED GLOBAL HTML/BODY LOCK --- */
+/* We do not set overflow:hidden on body anymore so the main site works. */
+
+.admin-container {
+  /* This makes the ADMIN panel take up the full screen and stay fixed */
+  position: fixed; 
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem 2rem;
+  background-color: var(--admin-bg); /* Ensure solid bg covers portfolio */
+  font-family: 'Inter', system-ui, sans-serif;
+  z-index: 9999; /* Sit on top of everything else */
+  color: var(--text-primary);
+  box-sizing: border-box;
+}
+
+/* ========================================= /
+/ 2. NAVBAR (CLEAN - NO OUTLINE)            /
+/ ========================================= */
+.admin-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  margin-bottom: 1.5rem;
+  
+  background: transparent; 
+  border: none; 
+  box-shadow: none;
+  
+  flex-shrink: 0; 
+  z-index: 1000;
+}
+
+.admin-logo {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: white;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.logo-highlight {
+  color: var(--neon-blue);
+}
+
+.nav-links-container {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.2); 
+  padding: 5px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.05); 
+}
+
+.nav-item {
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 12px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: color 0.2s ease;
+}
+
+.nav-item:hover { color: white; }
+.nav-item.active { 
+  color: #030712; 
+  background: var(--neon-blue); 
+}
+
+.nav-actions { display: flex; align-items: center; gap: 15px; }
+
+.site-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: 0.3s;
+}
+.site-link:hover { color: white; }
+
+.logout-btn {
+  background: transparent;
+  color: var(--neon-red);
+  border: 1px solid var(--neon-red);
+  padding: 0.6rem 1.2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+.logout-btn:hover {
+  background: var(--neon-red);
+  color: white;
+  box-shadow: 0 0 15px rgba(255, 85, 85, 0.4);
+}
+
+/* ========================================= /
+/ 3. CONTENT AREA (FIXED LAYOUT)            /
+/ ========================================= */
+.admin-content-area {
+  flex: 1; 
+  overflow: hidden; 
+  display: flex;
+  flex-direction: column;
+  min-height: 0; 
+}
+
+/* The Main Panel Wrapper */
+.admin-editor-wrapper {
+  background: transparent;
+  border: 1px solid var(--neon-blue);
+  box-shadow: 0 0 20px rgba(100, 255, 218, 0.15);
+  
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  overflow: hidden;
+  color: var(--text-primary);
+}
+
+/* Header - Fixed at top of Panel */
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2.5rem;
+  background: transparent; 
+  border-bottom: 1px solid var(--neon-blue);
+  flex-shrink: 0; 
+  z-index: 20;
+}
+
+.admin-header h3 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+}
+
+/* SCROLLABLE CONTENT AREA */
+.admin-editor-content {
+  flex: 1; 
+  overflow-y: auto; /* SCROLLS HERE */
+  padding: 2.5rem;
+}
+
+/* Custom Scrollbar */
+.admin-editor-content::-webkit-scrollbar {
+  width: 8px;
+}
+.admin-editor-content::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.3);
+}
+.admin-editor-content::-webkit-scrollbar-thumb {
+  background: var(--neon-blue);
+  border-radius: 4px;
+}
+
+/* Inputs & Forms */
+.input-group { margin-bottom: 1.5rem; }
+.input-label {
+  display: block;
+  color: var(--neon-blue);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  text-shadow: 0 2px 2px rgba(0,0,0,1); 
+}
+
+.edit-input, .edit-textarea {
+  width: 100%;
+  background: rgba(2, 12, 27, 0.6); 
+  border: 1px solid #333;
+  color: white;
+  padding: 12px 16px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: var(--transition);
+  font-family: inherit;
+  outline: none;
+  margin-bottom: 10px;
+}
+
+.edit-input:focus, .edit-textarea:focus {
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 10px rgba(100, 255, 218, 0.2);
+}
+
+/* Buttons */
+.action-btn {
+  background: var(--neon-blue);
+  color: #0a192f;
+  border: none;
+  padding: 0.8rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+  font-size: 0.95rem;
+}
+.action-btn:hover {
+  box-shadow: 0 0 20px rgba(100, 255, 218, 0.6);
+}
+
+/* Card Editors (Individual items) */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.card-editor {
+  background: rgba(17, 34, 64, 0.4); 
+  border: 1px solid var(--neon-blue);
+  box-shadow: inset 0 0 10px rgba(100, 255, 218, 0.05);
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.delete-icon-btn {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 107, 107, 0.2);
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.delete-icon-btn:hover {
+  background: rgba(255, 107, 107, 0.2);
+  transform: scale(1.1);
+}
+
+/* Login Page */
+.login-container {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.login-card {
+  background: transparent;
+  padding: 3rem;
+  border-radius: 12px;
+  border: 1px solid var(--neon-blue);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+}
